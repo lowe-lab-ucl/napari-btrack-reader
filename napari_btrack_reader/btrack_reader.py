@@ -10,7 +10,6 @@ Replace code below accordingly.  For complete documentation see:
 https://napari.org/docs/plugins/for_plugin_developers.html
 """
 
-import numpy as np
 from btrack.utils import tracks_to_napari
 from btrack.dataio import HDF5FileHandler
 from napari_plugin_engine import napari_hook_implementation
