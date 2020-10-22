@@ -9,6 +9,8 @@ see: https://napari.org/docs/plugins/hook_specifications.html
 Replace code below accordingly.  For complete documentation see:
 https://napari.org/docs/plugins/for_plugin_developers.html
 """
+
+import numpy as np
 from btrack.utils import tracks_to_napari
 from btrack.dataio import HDF5FileHandler
 from napari_plugin_engine import napari_hook_implementation
@@ -62,9 +64,9 @@ def reader_function(path):
         A list of LayerData tuples where each tuple in the list contains
         (data, metadata, layer_type), where data is a numpy array, metadata is
         a dict of keyword arguments for the corresponding viewer.add_* method
-        in napari, and layer_type is a lower-case string naming the type of layer.
-        Both "meta", and "layer_type" are optional. napari will default to
-        layer_type=="image" if not provided
+        in napari, and layer_type is a lower-case string naming the type of
+        layer. Both "meta", and "layer_type" are optional. napari will default
+        to layer_type=="image" if not provided
     """
     # handle both a string and a list of strings
     paths = [path] if isinstance(path, str) else path
@@ -74,13 +76,23 @@ def reader_function(path):
 
     for _path in paths:
         with HDF5FileHandler(_path, 'r') as hdf:
+
+            # get the segmentation if there is one
+            if "segmentation" in hdf._hdf:
+                segmentation = hdf.segmentation
+                layers.append((segmentation, {}, "labels"))
+
+            # iterate over object types and create a layer for each
             for obj_type in hdf.object_types:
 
                 # set the object type, and retrieve the tracks
                 hdf.object_type = obj_type
-                raw_tracks = hdf.tracks
 
-                tracks, properties, graph = tracks_to_napari(raw_tracks, ndim=2)
+                if f"tracks/{obj_type}" not in hdf._hdf:
+                    continue
+
+                tracklets = hdf.tracks
+                tracks, properties, graph = tracks_to_napari(tracklets, ndim=2)
 
                 # optional kwargs for the corresponding viewer.add_* method
                 # https://napari.org/docs/api/napari.components.html#module-napari.components.add_layers_mixin
