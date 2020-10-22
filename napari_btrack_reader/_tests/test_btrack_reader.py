@@ -1,4 +1,3 @@
-import numpy as np
 from napari_btrack_reader import napari_get_reader
 
 
