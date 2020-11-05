@@ -1,5 +1,5 @@
 """
-This module is an example of a barebones numpy reader plugin for napari.
+This module is a reader plugin btrack files for napari.
 
 It implements the ``napari_get_reader`` hook specification, (to create
 a reader plugin) but your plugin may choose to implement any of the hook
