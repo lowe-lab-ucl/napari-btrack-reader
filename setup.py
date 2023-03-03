@@ -8,5 +8,6 @@ if 'sdist' not in sys.argv:
     )
 
 setup(
-    name="napari-btrack-reader"
+    name="napari-btrack-reader",
+    version="1.0.0",
 )
