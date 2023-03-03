@@ -7,11 +7,14 @@ if 'sdist' not in sys.argv:
         "instead of `napari-btrack-reader`) ***\n"
     )
 
+description = (
+    "The functionality of this package has been integrated into "
+    "https://github.com/quantumjot/BayesianTracker."
+)
+
 setup(
     name="napari-btrack-reader",
-    version="1.0.2",
-    long_description=(
-        "The functionality of this package has been integrated into "
-        "[BayesianTracker](https://github.com/quantumjot/BayesianTracker)."
-    )
+    version="1.0.3",
+    description=description,
+    long_description=description,
 )
