@@ -1,7 +1,0 @@
-
-# Add labels from the EDAM Bioimaging ontology
-labels:
-  ontology: EDAM-BIOIMAGING:alpha06
-  terms:
-  - Object tracking
-  - Image time series
